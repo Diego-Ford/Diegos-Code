@@ -20,14 +20,6 @@ write.csv(NER_dates, file = "C:\\Users\\diego\\OneDrive\\Desktop\\BotTest\\NER_T
 # read in Ner output data with dates
 Ner_Output <- read.csv('C:\\Users\\diego\\OneDrive\\Desktop\\BotTest\\NER_TEST_FILES\\Ner Output\\combined_dates.csv')
 
-#clean locations
-#Ner_Output$entity <- gsub("(?i)PENNSYLVANIA|State Pennsylvaniya", "Pennsylvaniya", Ner_Output$entity, ignore.case = TRUE)
-#Ner_Output$entity <- gsub("china|communist china|	China China", "China",Ner_Output$entity, ignore.case = TRUE)
-#Ner_Output$entity <- gsub("Georgia","Georgia",Ner_Output$entity, ignore.case = TRUE)
-#Ner_Output$entity <- gsub("Texas|state texas", "Texas",Ner_Output$entity, ignore.case = TRUE)
-#Ner_Output$entity <- gsub("Antrim|Michigan Antrim|Antrim County","Antrim County",Ner_Output$entity, ignore.case = TRUE)
-#Ner_Output$entity <- gsub("US|United States|US States|United StatesA|state|the states","United States",Ner_Output$entity, ignore.case = TRUE)
-#Ner_Output$entity <- gsub("Michigan","Michigan",Ner_Output$entity, ignore.case = TRUE)
 
 #Get counts of unique locations  
 locationCounts <- sqldf("SELECT entity,date, COUNT(entity) FROM Ner_Output WHERE tag ='LOC' 
