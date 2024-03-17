@@ -1,0 +1,13 @@
+Package: EasySentiment
+Type: Package
+Title: A package for easy and quick sentiment analysis.
+Version: 0.0.0.9000
+Authors@R: person("Diego", "Ford", email = "diegoford0815@gmail.com", role = c("aut", "cre"))
+Description: This is a tool for conducting sentiment analysis quickly and easily.
+    It will provide tools for measuring sentiments using the various sentiment dictionaries.
+    All you need to feed into it is a vector of string you would like analyzed.
+    There will be tools for summary statistics, creating TDMs or DTMs and different visualizations.
+Depends: R (>= 3.1.2)
+License: CC0
+Encoding: UTF-8
+LazyData: true
