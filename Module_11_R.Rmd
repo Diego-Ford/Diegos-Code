@@ -1,0 +1,36 @@
+---
+title: "Week_11_R"
+author: "Diego Ford"
+date: "2024-03-26"
+output: html_document
+---
+
+This Document will demonstrate a basic R markdown file. You can make *italic* and **bold** words.
+In this Document we will make a time series graph for the *airmiles* data from R. 
+This data has two variables:
+
+* **Date**
+* **Miles Flown**
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+## Load Data
+
+```{r airmiles data}
+data(airmiles)
+```
+
+## Plot Air Miles
+
+```{r pressure}
+plot(airmiles)
+```
+
+
+## Analysis 
+
+This data is very interesting, the average miles flown over the years listed is `r mean(airmiles)` miles! thats **alot** of miles! and it goes up and up.the equation to find average is $$ sum(x) / nrow(x) $$, now you can see how the math is done! it was very ~~tedious~~ easy and fun to create this basic interactive markdown file!
+
