@@ -1,0 +1,110 @@
+---
+title: "EasySentiment Functions"
+author: "Diego Ford"
+date: "2024-03-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+
+This Document will serve to explain and show the code behind the functions created for my EasySentiment package. **Please note that this package is in version 0.0.0.900 at the time of writing and things may change by the final release**
+
+
+
+#Functions
+
+##get_sentiments function
+
+### Purpose
+
+The purpose of this function is to get the sentiments of text inputted into it. It will quickly and easily return the sentiments of text inputted into it. 
+
+### Inputs and Outputs
+
+The function will take in a vector of strings and returns a tibble containing the sentiments for each word in each string. It will also take in as an input the sentiment dictionary you would like to use, which will be *"bing"* *"nrc"* *loughran* or *afinn*, support for other lexicons or custom lexicons may be added in the future.
+
+### Function Construction
+
+```{r get_sentiments function}
+library(dplyr)
+
+get_sentiments <- function(text, lexicon) {
+  text <- text
+  
+  if(tolower(lexicon) %in% c("bing", "afinn", "nrc", "loughran")) {
+    sentiments <- tidytext::get_sentiments(lexicon)
+  } else {
+    stop("An invalid sentiment lexicon was selected")
+  }
+  
+  # Tokenize
+  text <- data.frame(text) 
+  text <- text %>%
+    dplyr::mutate(indexes = dplyr::row_number())
+  
+  colnames(text) <- c("text", "indexes")
+  text_tokens <- text %>%
+    tidytext::unnest_tokens(output = word, input = text, token = "words")
+  
+  text_sentiments <- text_tokens %>%
+    dplyr::inner_join(sentiments)
+  
+  return(text_sentiments)
+}
+
+
+
+```
+
+### example
+
+```{r get_sentiments example}
+
+example_strings <- c("I am really angry right now", "I am very very happy", "Rage and mixed feelings", "i lied")
+example_sentiments <- get_sentiments(example_strings, "bing")
+head(example_sentiments)
+```
+
+## Sentiment_Vis Function
+
+### Purpose
+
+This function allows for several visuals regarding the distribution of sentiments in the corpora.
+
+### Inputs and Outputs
+
+The inputs for this function is *index* which is a unique index for each text document and *vis_type* which tells which type of vis you would like generated right now you can chose sentiment_hist or word_hist, other visuals will be added before final release the final input is *sentiments* which is the sentiments associated with each text document. The output is a graph.
+
+### Function Construction
+```{r sentiment_vis}
+sentiment_vis <- function(sentiments, index, vis_type){
+  data <- data.frame(index, sentiments)
+  
+  #get counts of sentiments
+  if(vis_type == "sentiment_hist"){
+    data <- data %>%
+      group_by(index, sentiments) %>%
+      count()
+  
+  ggplot2::ggplot(data, ggplot2::aes(x = as.factor(index), y = n)) +
+    ggplot2::geom_col(ggplot2::aes(fill = as.factor(sentiments)), position = "dodge") +
+    ggplot2::labs(xlab = "indexes", ylab = "sentiments", fill = "sentiment")
+  }
+}
+```
+
+### example
+
+```{r example}
+plot <- sentiment_vis(example_sentiments$sentiment, example_sentiments$indexes, vis_type = "sentiment_hist")
+plot
+```
+
+
+
+
+
