@@ -1,0 +1,48 @@
+import sys
+
+for line in sys.stdin:
+    data = line.strip().split("\t")
+    if len(data) == 6:
+        date, time, store, item, cost, payment = data
+        print("{0}\t{1}".format(item, cost))
+
+from datetime import datetime  
+from datetime import timedelta  
+
+#print current time date
+print(datetime.now())
+#Add 1 day  
+print(datetime.now() + timedelta(days=1)) 
+
+#subtract 60 seconds 
+print(datetime.now() - timedelta(seconds=60))
+
+#Add 2 years
+print(datetime.now() + timedelta(days=730))
+
+#Create a timedelta object representing 100 days, 10 hours, and 13 minutes
+d = timedelta(days=100, hours=10, minutes=13)
+print(d.days, d.seconds, d.microseconds)
+
+
+#Write a function that takes two arguments (feet and inches) with this time object
+def get_FI(feet, inches):
+    # Calculate total height in inches
+    complete_inches = feet * 12 + inches
+    
+    # Get the current date and time
+    datetime_object = datetime.now()
+    
+    # Print the current date and time
+    print("Current date and time:", datetime_object)
+    
+    # Print the type of the datetime object
+    print('Type :-', type(datetime_object))
+    
+    return complete_inches
+
+# Example usage
+f = 7
+i = 2
+height = get_FI(f, i)
+print(f"Total height in inches at this current time: {height}")
